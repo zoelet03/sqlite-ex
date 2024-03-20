@@ -6,16 +6,20 @@ from create_db import create_new_database
 
 
 def populate_faculty(connection):
-    for faculty in [
+    faculty_data = [
         (1, 'Underwater Needlework', 'Prof John Jones',),
         (2, 'High Altitude Basket Weaving', 'Dr Jane Smith',),
-    ]:
-        connection.execute('insert into faculty (id, name, dean) values (?, ?, ?)', faculty)
-        connection.commit()
+    ]
+
+    cur = connection.cursor()
+    cur.executemany('insert into faculty (id, name, dean) values (?, ?, ?)', faculty_data)
+
+    cur.close()
+    connection.commit()
 
 
 def populate_room(connection):
-    for room in [
+    room_data = [
         (1, 'TU101', 'Turing',),
         (2, 'TU102', 'Turing',),
         (3, 'TU103', 'Turing',),
@@ -26,13 +30,17 @@ def populate_room(connection):
         (8, 'LO202', 'Lovelace',),
         (9, 'LO203', 'Lovelace',),
         (10, 'LO204', 'Lovelace',),
-    ]:
-        connection.execute('insert into room (id, number, building) values (?, ?, ?)', room)
-        connection.commit()
+    ]
+
+    cur = connection.cursor()
+    cur.executemany('insert into room (id, number, building) values (?, ?, ?)', room_data)
+
+    cur.close()
+    connection.commit()
 
 
 def populate_tutor(connection):
-    for tutor in [
+    tutor_data = [
         ('Alan Smith', 1, 1,),
         ('Billie Jackson', 1, 2,),
         ('Colin White', 2, 4,),
@@ -45,9 +53,13 @@ def populate_tutor(connection):
         ('Jackie Power', 1, 3,),
         ('Kevin Appleton', 1, 6,),
         ('Lucy Green', 2, 6,),
-    ]:
-        connection.execute('insert into tutor (name, faculty, room) values (?, ?, ?)', tutor)
-        connection.commit()
+    ]
+
+    cur = connection.cursor()
+    cur.executemany('insert into tutor (name, faculty, room) values (?, ?, ?)', tutor_data)
+
+    cur.close()
+    connection.commit()
 
 
 if __name__ == '__main__':

@@ -5,7 +5,9 @@ from common import connect, disconnect
 
 
 def create_tutor_table(connection):
-    connection.execute('''
+    cur = connection.cursor()
+
+    cur.execute('''
                     create table if not exists tutor (
                     id integer primary key,
                     name text not null,
@@ -16,29 +18,47 @@ def create_tutor_table(connection):
                     )
                     ''')
 
+    cur.close()
+    connection.commit()
+
 
 def create_faculty_table(connection):
-    connection.execute('''
+    cur = connection.cursor()
+
+    cur.execute('''
                     create table if not exists faculty (
                     id integer primary key,
                     name text not null,
                     dean text not null)
                     ''')
 
+    cur.close()
+    connection.commit()
+
 
 def create_room_table(connection):
-    connection.execute('''
+    cur = connection.cursor()
+
+    cur.execute('''
                     create table if not exists room (
                     id integer primary key,
                     number text not null,
                     building text not null)
                     ''')
 
+    cur.close()
+    connection.commit()
+
 
 def zap_database(connection):
-    connection.execute('drop table if exists tutor')
-    connection.execute('drop table if exists faculty')
-    connection.execute('drop table if exists room')
+    cur = connection.cursor()
+
+    cur.execute('drop table if exists tutor')
+    cur.execute('drop table if exists faculty')
+    cur.execute('drop table if exists room')
+
+    cur.close()
+    connection.commit()
 
 
 def create_new_database():
@@ -49,6 +69,8 @@ def create_new_database():
     create_faculty_table(con)
     create_room_table(con)
     create_tutor_table(con)
+
+    con.commit()
 
     disconnect(con)
 
