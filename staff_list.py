@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sqlite3
+
 from tabulate import tabulate
 
 from common import connect, disconnect
@@ -27,6 +29,11 @@ def get_staff_list(connection):
 if __name__ == '__main__':
     con = connect()
 
-    print(tabulate(get_staff_list(con), headers=['Name', 'Faculty', 'Room'], tablefmt='orgtbl'))
+    try:
+        print(tabulate(get_staff_list(con), headers=['Name', 'Faculty', 'Room'], tablefmt='orgtbl'))
 
-    disconnect(con)
+    except sqlite3.OperationalError:
+        print('Error retrieving list. Most likely database is not created correctly.')
+
+    finally:
+        disconnect(con)

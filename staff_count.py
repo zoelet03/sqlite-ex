@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from tabulate import tabulate
+import sqlite3
 
 from common import connect, disconnect
 
